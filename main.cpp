@@ -1,13 +1,16 @@
-#include "Models/ThreeDArrayModel.cpp"
+// #include "Models/ThreeDArrayModel.cpp"
 #include "Models/Rubikscube.cpp"
+#include "Models/OneDArrayModel.cpp"
 
 int main(){
-     ThreeDArrayModel cube;
-     cube.print();
-     cube.D();
-     cube.L();
-     cube.D2();
-     cube.Uprime();
-     cube.Dprime();
-     cube.print();
+    OneDArrayModel cube;
+    cube.print();
+    cube.R();
+    cube.print();
+    cube.L();
+    cube.print();
+    cube.R2();
+    cube.print();
+    cube.Rprime();
+    cube.print();
 }
