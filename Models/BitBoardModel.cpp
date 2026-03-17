@@ -19,7 +19,7 @@ public:
         return (num < 4) ? num : --num; 
     }
 
-    char getColor(int face, int row, int col) override {
+    char getColor(int face, int row, int col) const override {
         int cells = (row * 3) + col;
         if (cells == 4) return Face[face];
         if (cells > 4) --cells;
@@ -238,4 +238,14 @@ public:
         this -> D2();
         this -> D();
      }
+     
+     bool operator==(const BitBoardModel& other) const {
+        for (int i = 0; i < 6; ++i) {
+            if (this->cube[i] != other.cube[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 };
+

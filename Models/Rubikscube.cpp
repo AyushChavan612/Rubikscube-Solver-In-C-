@@ -1,4 +1,7 @@
 #include "Rubikscube.hpp"
+#include <vector>
+#include <random>
+#include <chrono>
 
 void Rubikscube::printPartial(int face){
     for(int row = 0; row < 3; ++row){
@@ -49,4 +52,161 @@ bool Rubikscube::isSolved(){
         }
     }
     return true;
+}
+
+int Rubikscube::getNumber(char color){
+    switch (color)
+    {
+        case 'W':
+            return 0;
+        case 'G' :
+            return 1;
+        case 'R' :
+            return 2;
+        case 'B' :
+            return 3;
+        case 'O' :
+            return 4;
+        case 'Y' :
+            return 5;
+    }
+}
+
+void Rubikscube::performMove(Move move){
+      switch (move)
+      {
+        case Move::U : 
+            this->U();
+            break;
+        case Move::U2 : 
+            this->U2();
+            break;
+        case Move::UPRIME : 
+            this->Uprime();
+            break;
+        case Move::L : 
+            this->L();
+            break;
+        case Move::L2 : 
+            this->L2();
+            break;
+        case Move::LPRIME : 
+            this->Lprime();
+            break;
+        case Move::F : 
+            this->F();
+            break;
+        case Move::F2 : 
+            this->F2();
+            break;
+        case Move::FPRIME : 
+            this->Fprime();
+            break;
+        case Move::R : 
+            this->R();
+            break;
+        case Move::R2 : 
+            this->R2();
+            break;
+        case Move::RPRIME : 
+            this->Rprime();
+            break;
+        case Move::B : 
+            this->B();
+            break;
+        case Move::B2 : 
+            this->B2();
+            break;
+        case Move::BPRIME : 
+            this->Bprime();
+            break;
+        case Move::D : 
+            this->D();
+            break;
+        case Move::D2 : 
+            this->D2();
+            break;
+        case Move::DPRIME : 
+            this->Dprime();
+            break;
+      }
+}
+
+void Rubikscube::invertMove(Move move){
+      switch (move)
+      {
+        case Move::U : 
+            this->Uprime();
+            break;
+        case Move::U2 : 
+            this->U2();
+            break;
+        case Move::UPRIME : 
+            this->U();
+            break;
+        case Move::L : 
+            this->Lprime();
+            break;
+        case Move::L2 : 
+            this->L2();
+            break;
+        case Move::LPRIME : 
+            this->L();
+            break;
+        case Move::F : 
+            this->Fprime();
+            break;
+        case Move::F2 : 
+            this->F2();
+            break;
+        case Move::FPRIME : 
+            this->F();
+            break;
+        case Move::R : 
+            this->Rprime();
+            break;
+        case Move::R2 : 
+            this->R2();
+            break;
+        case Move::RPRIME : 
+            this->R();
+            break;
+        case Move::B : 
+            this->Bprime();
+            break;
+        case Move::B2 : 
+            this->B2();
+            break;
+        case Move::BPRIME : 
+            this->B();
+            break;
+        case Move::D : 
+            this->Dprime();
+            break;
+        case Move::D2 : 
+            this->D2();
+            break;
+        case Move::DPRIME : 
+            this->D();
+            break;
+      }
+}
+
+
+void Rubikscube::scrambleCube(int num) {
+    mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+    
+    int prevFace = -1; 
+    int movesApplied = 0;
+    
+    while(movesApplied < num) {
+        int randomMove = rng() % 18;
+        int currentFace = randomMove / 3;
+        
+        if(currentFace != prevFace) {
+            this->performMove(static_cast<Rubikscube::Move>(randomMove));
+            prevFace = currentFace;
+            movesApplied++;
+        }
+    }
 }

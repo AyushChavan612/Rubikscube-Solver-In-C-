@@ -7,12 +7,32 @@ using namespace std;
 class Rubikscube{
 public:
     static constexpr char Face[6] = {'W' , 'G' , 'R' , 'B' , 'O' , 'Y'};
+
+    enum class Move {
+        U, UPRIME, U2,
+        D, DPRIME, D2,
+        L, LPRIME, L2,
+        R, RPRIME, R2,
+        F, FPRIME, F2,
+        B, BPRIME, B2, 
+        stop
+    };
+
+    static int getNumber(char color);
     
     void printPartial(int face);
 
     void print();
+
+    string getMove(int num);
+
+    void performMove(Move move);
+
+    void invertMove(Move move);
     
-    virtual char getColor(int face, int row, int col) = 0;
+    void scrambleCube(int num);
+    
+    virtual char getColor(int face, int row, int col) const = 0;
 
     bool isSolved();
 

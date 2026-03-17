@@ -14,7 +14,7 @@ public:
         }
      }
 
-     char getColor(int face , int row , int col) override {
+     char getColor(int face , int row , int col) const override {
          return cube[face][row][col];
      }
 
@@ -219,4 +219,17 @@ public:
         this -> D2();
         this -> D();
      }
+     
+     bool operator==(const ThreeDArrayModel& other) const {
+        for(int face = 0; face < 6; ++face){
+			for(int i = 0; i < 3; ++i) {
+				for(int j = 0; j < 3; ++j){
+					if(this -> cube[face][i][j] != other.cube[face][i][j]){
+						return false;
+					}
+				}
+			}
+		}
+        return true;
+    }
 };

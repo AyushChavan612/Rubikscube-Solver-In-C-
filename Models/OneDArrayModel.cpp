@@ -10,11 +10,11 @@ public:
         }
      }
 
-     int getIndex(int face , int row , int col){
+     int getIndex(int face , int row , int col) const {
          return (face * 9) + row*3 + col;
      }
 
-     char getColor(int face, int row , int col) override {
+     char getColor(int face, int row , int col) const override {
          return this -> cube[this -> getIndex(face , row , col)];
      }
 
@@ -219,7 +219,14 @@ public:
         this -> D2();
         this -> D();
      }
+     
+     bool operator==(const OneDArrayModel& other) const {
+        for(int i = 0; i < 54; ++i){
+			if(this -> cube[i] != other.cube[i]){
+				return false;
+			}
+		}
+        return true;
+    }
 };
-
-
 
