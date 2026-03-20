@@ -219,6 +219,17 @@ public:
         this -> D2();
         this -> D();
      }
+
+     void setCorner(int cornerNo, int actualCorner, int orientation) override {
+        const int* color = cornerOrientations[actualCorner][orientation];
+        for (int i = 0; i < 3; ++i) {
+            int faceIdx = cornerMap[cornerNo][i][0];
+            int row     = cornerMap[cornerNo][i][1];
+            int col     = cornerMap[cornerNo][i][2];
+
+            this -> cube[this -> getIndex(faceIdx , row , col)] = Rubikscube::Face[color[i]];
+        }
+    }
      
      bool operator==(const OneDArrayModel& other) const {
         for(int i = 0; i < 54; ++i){

@@ -6,7 +6,6 @@
 #include <algorithm>
 #include "../Utils/GenericRubiksHash.hpp"
 #include "../Models/Rubikscube.hpp"
-
 using namespace std;
 
 template <class T>

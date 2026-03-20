@@ -210,3 +210,48 @@ void Rubikscube::scrambleCube(int num) {
         }
     }
 }
+
+ pair<vector<int>,vector<int>>& Rubikscube::getPermutationAndOrientation() {
+        res.first.clear();
+        res.second.clear();
+
+        for(int i = 0; i < 8; ++i) {
+            int mask = 0;
+            vector<int> corner;
+            
+            for(int j = 0; j < 3; ++j) {
+                const int* coordinates = cornerMap[i][j]; 
+                
+                char color = this->getColor(coordinates[0], coordinates[1], coordinates[2]);
+                int num = this->getNumber(color);
+                
+                mask = mask | (1 << num);
+                corner.push_back(num);
+            }
+            
+            int cornerNum = -1;
+            for(int j = 0; j < 8; ++j) {
+                if(cornerNo[j] == mask) {
+                    cornerNum = j;
+                    break;
+                }
+            }
+            res.first.push_back(cornerNum);
+            
+            for(int j = 0; j < 3; ++j) {
+                bool flag = true; 
+                for(int k = 0; k < 3; ++k) {
+                    if(cornerOrientations[cornerNum][j][k] != corner[k]) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if(flag) {
+                    res.second.push_back(j);
+                    break;
+                }
+            }
+        }
+         
+        return res;
+    }
