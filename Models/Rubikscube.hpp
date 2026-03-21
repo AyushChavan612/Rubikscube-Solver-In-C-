@@ -33,8 +33,51 @@ public:
         {{4, 5, 1}, {1, 4, 5}, {5, 1, 4}}  // 7: Orange, Yellow, Green
     };
 
+    static constexpr int edgeMap[12][2][3] = {
+        // --- TOP LAYER ---
+        {{0, 0, 1}, {4, 0, 1}}, // 0: UB (Up-Back)
+        {{0, 1, 2}, {3, 0, 1}}, // 1: UR (Up-Right)
+        {{0, 2, 1}, {2, 0, 1}}, // 2: UF (Up-Front)
+        {{0, 1, 0}, {1, 0, 1}}, // 3: UL (Up-Left)
+
+        // --- MIDDLE LAYER ---
+        {{4, 1, 0}, {3, 1, 2}}, // 4: BR (Back-Right)
+        {{2, 1, 2}, {3, 1, 0}}, // 5: FR (Front-Right)
+        {{2, 1, 0}, {1, 1, 2}}, // 6: FL (Front-Left)
+        {{4, 1, 2}, {1, 1, 0}}, // 7: BL (Back-Left)
+
+        // --- BOTTOM LAYER ---
+        {{5, 2, 1}, {4, 2, 1}}, // 8: DB (Down-Back)
+        {{5, 1, 2}, {3, 2, 1}}, // 9: DR (Down-Right)
+        {{5, 0, 1}, {2, 2, 1}}, // 10: DF (Down-Front)
+        {{5, 1, 0}, {1, 2, 1}}  // 11: DL (Down-Left)
+    };
+
+    static constexpr int edgeOrientation[12][2][2] = {
+        // --- TOP LAYER ---
+        {{0, 4}, {4, 0}}, // 0: UB 
+        {{0, 3}, {3, 0}}, // 1: UR 
+        {{0, 2}, {2, 0}}, // 2: UF 
+        {{0, 1}, {1, 0}}, // 3: UL 
+
+        // --- MIDDLE LAYER ---
+        {{4, 3}, {3, 4}}, // 4: BR 
+        {{2, 3}, {3, 2}}, // 5: FR 
+        {{2, 1}, {1, 2}}, // 6: FL 
+        {{4, 1}, {1, 4}}, // 7: BL 
+
+        // --- BOTTOM LAYER ---
+        {{5, 4}, {4, 5}}, // 8: DB 
+        {{5, 3}, {3, 5}}, // 9: DR 
+        {{5, 2}, {2, 5}}, // 10: DF 
+        {{5, 1}, {1, 5}}  // 11: DL 
+    };
+
     pair<vector<int>, vector<int>> res = {vector<int>(8), vector<int>(8)};
+
     vector<int> cornerNo = {7, 13, 38, 44, 25, 19, 56, 50};
+
+    vector<int> edgeNo = {17 , 9 , 5 , 3 , 24 , 12 , 6 , 18 , 48 , 40 , 36 , 34};
 
     enum class Move {
         U, UPRIME, U2,
@@ -60,7 +103,9 @@ public:
     
     void scrambleCube(int num);
 
-    pair<vector<int>,vector<int>>& getPermutationAndOrientation();
+    pair<vector<int>,vector<int>>& getCornerPermutationAndOrientation();
+
+    pair<vector<int>,vector<int>>& getEdgePermutationAndOrientation();
     
     virtual char getColor(int face, int row, int col) const = 0;
 
@@ -105,6 +150,8 @@ public:
     virtual void Dprime()=0;
 
     virtual void setCorner(int cornerNo, int actualCorner, int orientation)=0;
+
+    virtual void setEdge(int edgeNo , int actualEdgeNo , int orientation) = 0;
 };
 
 #endif

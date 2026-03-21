@@ -230,6 +230,17 @@ public:
             this -> cube[faceIdx][row][col] = Rubikscube::Face[color[i]];
         }
     }
+
+    void setEdge(int edgeNo , int actualEdgeNo , int orientation) override {
+        const int* color = Rubikscube::edgeOrientation[actualEdgeNo][orientation];
+        for (int i = 0; i < 2; ++i) {
+            int faceIdx = edgeMap[edgeNo][i][0];
+            int row     = edgeMap[edgeNo][i][1];
+            int col     = edgeMap[edgeNo][i][2];
+
+            this -> cube[faceIdx][row][col] = Rubikscube::Face[color[i]];
+        }
+    }
      
      bool operator==(const ThreeDArrayModel& other) const {
         for(int face = 0; face < 6; ++face){

@@ -9,7 +9,7 @@ template<class T>
 class Encoder {
 public:
     int getRank(T& cube) {         
-        auto &[permutation, orientation] = cube.getPermutationAndOrientation();
+        auto &[permutation, orientation] = cube.getCornerPermutationAndOrientation();
         // cout << "hello\n";
         int permutationRank = getPermutationRank(permutation);
         int orientationRank = getOrientationRank(orientation);

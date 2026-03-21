@@ -2,8 +2,8 @@
 #define CORNERDB_H
 
 #include "../../Models/BitBoardModel.cpp"
-#include "Decoder.hpp"
-#include "Encode.hpp"
+#include "DecodeCorners.hpp"
+#include "EncodeCorners.hpp"
 #include <queue>
 #include <vector>
 #include <fstream>

@@ -211,7 +211,7 @@ void Rubikscube::scrambleCube(int num) {
     }
 }
 
- pair<vector<int>,vector<int>>& Rubikscube::getPermutationAndOrientation() {
+ pair<vector<int>,vector<int>>& Rubikscube::getCornerPermutationAndOrientation() {
         res.first.clear();
         res.second.clear();
 
@@ -254,4 +254,48 @@ void Rubikscube::scrambleCube(int num) {
         }
          
         return res;
-    }
+}
+
+pair<vector<int>,vector<int>>& Rubikscube::getEdgePermutationAndOrientation(){
+     res.first.clear();
+     res.second.clear();
+
+     for(int edge = 0; edge < 12; ++edge){
+         int mask=0;
+
+         vector<int> colors;
+         for(int i = 0; i < 2; ++i){
+            const int* coordinates = edgeMap[edge][i];
+            char color = (1 << this -> getColor(coordinates[0],coordinates[1],coordinates[2]));
+            int num = this -> getNumber(color);
+            colors.push_back(num);
+            mask = mask | (1 << num);
+         }
+
+         int idx;
+         for(int i = 0; i < 12; ++i){
+            if(mask == Rubikscube::edgeNo[i]){
+                idx=i;
+                break;
+            }
+         }
+
+         res.first.push_back(idx);
+
+         for(int i = 0; i < 2; ++i){
+            bool flag = true;
+            for(int j = 0; j < 2; ++j){
+                if(Rubikscube::edgeOrientation[idx][i][j] != colors[j]){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag){
+                res.second.push_back(i);
+                break;
+            }
+         }
+     }
+
+     return res;    
+}
