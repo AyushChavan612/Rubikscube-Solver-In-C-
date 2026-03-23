@@ -1,12 +1,11 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 
-#include "../../Models/BitBoardModel.cpp"
 #include <vector>
 using namespace std;
 
 template<class T>
-class Encoder {
+class CornerEncoder {
 public:
     int getRank(T& cube) {         
         auto &[permutation, orientation] = cube.getCornerPermutationAndOrientation();

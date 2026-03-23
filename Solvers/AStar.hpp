@@ -3,6 +3,7 @@
 
 #include "../Utils/GenericRubiksHash.hpp"
 #include "../PatternDatabase/CornerDatabase/CreateCornerDatabase.cpp"
+#include "../PatternDatabase/EdgeDatabase/CreateEdgeDatabase.cpp"
 #include<unordered_map>
 #include<queue>
 
@@ -12,7 +13,10 @@ private:
     T cube;
     unordered_map<T,int,GenericHash> Dist;
     unordered_map<T,Rubikscube::Move,GenericHash> Parent;
-    CornerDB &db;
+    CornerDB &cornerDB;
+    EdgeDB &edgeDB1 , &edgeDB2;
+    CornerEncoder<T> cornerEncoder;
+    EdgeEncoder<T> EdgeEncoder1 , EdgeEncoder2;
     
     class Node {
     public:
@@ -29,14 +33,24 @@ private:
 
     class CompareNode{
     public:
-        bool operator()(const Node &a , Node &b){
+        bool operator()(const Node &a , const Node &b){
             return (a.depth+a.herustic) > (b.depth+b.herustic);
         } 
     };
 
 public:
 
-    AStar(T cube, CornerDB &db) : cube(cube), db(db) { }
+   AStar(T cube, CornerDB &cornerDB, EdgeDB &db1, EdgeDB &db2) 
+        : cube(cube), cornerDB(cornerDB), edgeDB1(db1), edgeDB2(db2), 
+          EdgeEncoder1(0), EdgeEncoder2(6) {}
+
+    int getHerustic(T &cube){
+        int cornerRank = cornerEncoder.getRank(cube);
+        int edgeRank1 = EdgeEncoder1.getRank(cube);
+        int edgeRank2 = EdgeEncoder2.getRank(cube);
+
+        return max({cornerDB.getDistance(cornerRank) , edgeDB1.getDistance(edgeRank1) , edgeDB2.getDistance(edgeRank2)});
+    }
 
     void solve(){
         if (this->cube.isSolved()) {
@@ -49,8 +63,6 @@ public:
         pq.push(Node(this->cube,0,0));
         Parent[this->cube] = Rubikscube::Move::stop;
         Dist[cube] = 0;
-        
-        Encoder<T> encoder;
 
         // cout << "hello\n";
 
@@ -69,10 +81,8 @@ public:
 
             for(int i = 0; i < 18; ++i){
                 node.cube.performMove(static_cast<Rubikscube::Move>(i));
-
-                int index = encoder.getRank(node.cube);
                 // cout << "getting index" << endl;
-                int currHerustic = db.getDistance(index);
+                int currHerustic = this -> getHerustic(node.cube);
 
                 // cout << "inside for loop\n";
 

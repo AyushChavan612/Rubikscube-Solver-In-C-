@@ -4,6 +4,7 @@
 #include "../../Models/BitBoardModel.cpp"
 #include "DecodeCorners.hpp"
 #include "EncodeCorners.hpp"
+#include "../FileManager.cpp"
 #include <queue>
 #include <vector>
 #include <fstream>
@@ -24,21 +25,6 @@ public:
         database.assign(databaseSize, 0xFF);
     }
 
-    bool loadDatabase() {
-        ifstream file(path, ios::in | ios::binary);
-        
-        if (!file.is_open()) {
-            return false; 
-        }
-         
-        cout << "Pattern Database found! Loading from " << path << "..." << endl;
-        file.read(reinterpret_cast<char*>(database.data()), databaseSize);
-        file.close();
-
-        cout << "Database loaded successfully!" << endl;
-        return true;
-    }
-
     int getDistance(int index) {
         if (index & 1) {
             return (database[index / 2] >> 4) & 0x0F;
@@ -56,15 +42,15 @@ public:
     }
 
     void createDatabase() {
-        if (this->loadDatabase()) {
+        if (loadDatabase(database,databaseSize,path)) {
             return;
         }
 
         cout << "Database not found. Starting BFS..." << endl;
 
         queue<int> q;
-        Decoder<BitBoardModel> decoder;
-        Encoder<BitBoardModel> encoder;
+        CornerDecoder<BitBoardModel> decoder;
+        CornerEncoder<BitBoardModel> encoder;
 
         setDistance(0, 0);
         q.push(0);
@@ -96,19 +82,7 @@ public:
             }
         }
 
-        saveDatabase();
-    }
-
-    void saveDatabase() {
-        ofstream file(path, ios::out | ios::binary);
-        if (!file) {
-            cout << "Error: Could not open file at " << path << endl;
-            return;
-        }
-
-        file.write(reinterpret_cast<const char*>(database.data()), databaseSize);
-        file.close();
-        cout << "Pattern Database successfully saved to: " << path << endl;
+        saveDatabase(database,databaseSize,path);
     }
 };
 

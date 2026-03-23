@@ -1,21 +1,19 @@
 #ifndef DECODER_H
 #define DECODER_H
 
-#include "../../Models/BitBoardModel.cpp"
 #include <vector>
-
 using namespace std;
 
 template<class T>
-class Decoder {
+class CornerDecoder {
 public:
     T *cube;
 
-    Decoder() {
+    CornerDecoder() {
         cube = new T();
     }
 
-    ~Decoder() {
+    ~CornerDecoder() {
         delete cube;
     }
     

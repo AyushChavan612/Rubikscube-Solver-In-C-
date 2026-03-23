@@ -266,7 +266,7 @@ pair<vector<int>,vector<int>>& Rubikscube::getEdgePermutationAndOrientation(){
          vector<int> colors;
          for(int i = 0; i < 2; ++i){
             const int* coordinates = edgeMap[edge][i];
-            char color = (1 << this -> getColor(coordinates[0],coordinates[1],coordinates[2]));
+            char color = this -> getColor(coordinates[0],coordinates[1],coordinates[2]);
             int num = this -> getNumber(color);
             colors.push_back(num);
             mask = mask | (1 << num);
