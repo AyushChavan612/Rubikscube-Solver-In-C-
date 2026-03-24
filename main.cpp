@@ -1,23 +1,21 @@
-#include "Models/ThreeDArrayModel.cpp"
-#include "Models/Rubikscube.cpp"
-#include "Models/OneDArrayModel.cpp"
-#include "Models/BitBoardModel.cpp"
-#include "Solvers/Bfs.hpp"
-#include "Solvers/Dfs.hpp"
-#include "Solvers/IDDfs.hpp"
-#include <chrono>
-#include "PatternDatabase/CornerDatabase/CreateCornerDatabase.cpp"
-#include "Solvers/AStar.hpp"
-#include "PatternDatabase/EdgeDatabase/CreateEdgeDatabase.cpp"
+#include"Models/ThreeDArrayModel.cpp"
+#include"Models/OneDArrayModel.cpp"
+#include"Models/BitBoardModel.cpp"
+#include"Solvers/Bfs.hpp"
+#include"Solvers/Dfs.hpp"
+#include"Solvers/IDDfs.hpp"
+#include<chrono>
+#include"PatternDatabase/CornerDatabase/CreateCornerDatabase.cpp"
+#include"Solvers/AStar.hpp"
+#include"PatternDatabase/EdgeDatabase/CreateEdgeDatabase.cpp"
 #include<thread>
-
 using namespace std::chrono;
 
 int main(){
 	auto start = high_resolution_clock::now();
     // ThreeDArrayModel cube;
-    OneDArrayModel cube;
-    // BitBoardModel cube;
+    // OneDArrayModel cube;
+    BitBoardModel cube;
     
     cube.scrambleCube(13);
 

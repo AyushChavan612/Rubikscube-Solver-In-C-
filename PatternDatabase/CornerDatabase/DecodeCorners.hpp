@@ -8,7 +8,7 @@ template<class T>
 class CornerDecoder {
 public:
     T *cube;
-
+    
     CornerDecoder() {
         cube = new T();
     }

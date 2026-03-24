@@ -1,0 +1,3 @@
+/home/pacforever/Documents/rubikscube solver in c++/build/CMakeFiles/solver.dir
+/home/pacforever/Documents/rubikscube solver in c++/build/CMakeFiles/edit_cache.dir
+/home/pacforever/Documents/rubikscube solver in c++/build/CMakeFiles/rebuild_cache.dir
